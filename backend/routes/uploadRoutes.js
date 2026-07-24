@@ -33,6 +33,7 @@ router.post('/', protect, upload.single('file'), (req, res) => {
       message: 'File uploaded successfully',
       fileId: uploadStream.id,
       filename: filename,
+      fileUrl: `/api/upload/${uploadStream.id}`,
     });
   });
 
