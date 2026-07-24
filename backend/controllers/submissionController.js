@@ -78,8 +78,46 @@ const getMySubmissions = async (req, res) => {
   }
 };
 
+// @desc    Grade a submission (Teacher only)
+// @route   PUT /api/submissions/:id/grade
+const gradeSubmission = async (req, res) => {
+  try {
+    const { marks, feedback } = req.body;
+
+    const submission = await Submission.findById(req.params.id).populate('assignment');
+
+    if (!submission) {
+      return res.status(404).json({ message: 'Submission not found' });
+    }
+
+    // Check karo ki teacher hi is assignment ka creator hai
+    if (submission.assignment.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized to grade this submission' });
+    }
+
+    // Marks maxMarks se zyada na ho
+    if (marks > submission.assignment.maxMarks) {
+      return res.status(400).json({
+        message: `Marks cannot exceed maximum marks (${submission.assignment.maxMarks})`,
+      });
+    }
+
+    submission.marks = marks;
+    submission.feedback = feedback || '';
+    submission.gradedBy = req.user._id;
+    submission.status = 'graded';
+
+    await submission.save();
+
+    res.json(submission);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   submitAssignment,
   getSubmissionsByAssignment,
   getMySubmissions,
+  gradeSubmission,
 };
