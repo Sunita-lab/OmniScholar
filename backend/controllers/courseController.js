@@ -17,15 +17,55 @@ const createCourse = async (req, res) => {
   }
 };
 
-// @desc    Get all courses (public list, with filters later)
+
+// @desc    Get all courses (with search, filters, pagination)
 // @route   GET /api/courses
 const getCourses = async (req, res) => {
   try {
-    const courses = await Course.find({ status: 'published' })
-      .populate('instructor', 'fullName email avatar')
-      .sort({ createdAt: -1 });
+    const { search, category, difficulty, sort, page = 1, limit = 10 } = req.query;
 
-    res.json(courses);
+    // Query object banate hain dynamically
+    const query = { status: 'published' };
+
+    // Keyword search (title mein search karega)
+    if (search) {
+      query.title = { $regex: search, $options: 'i' }; // 'i' = case-insensitive
+    }
+
+    // Category filter
+    if (category) {
+      query.category = category;
+    }
+
+    // Difficulty filter
+    if (difficulty) {
+      query.difficulty = difficulty;
+    }
+
+    // Sorting
+    let sortOption = { createdAt: -1 }; // default: newest first
+    if (sort === 'oldest') sortOption = { createdAt: 1 };
+    if (sort === 'title-asc') sortOption = { title: 1 };
+    if (sort === 'title-desc') sortOption = { title: -1 };
+    if (sort === 'rating') sortOption = { rating: -1 };
+
+    // Pagination calculation
+    const skip = (Number(page) - 1) * Number(limit);
+
+    const courses = await Course.find(query)
+      .populate('instructor', 'fullName email avatar')
+      .sort(sortOption)
+      .skip(skip)
+      .limit(Number(limit));
+
+    const totalCourses = await Course.countDocuments(query);
+
+    res.json({
+      courses,
+      currentPage: Number(page),
+      totalPages: Math.ceil(totalCourses / Number(limit)),
+      totalCourses,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
