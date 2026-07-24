@@ -64,4 +64,10 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser };
+// @desc    Get logged-in user's profile
+// @route   GET /api/auth/profile
+const getProfile = async (req, res) => {
+  res.json(req.user);
+};
+
+module.exports = { registerUser, loginUser, getProfile };
