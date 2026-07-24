@@ -150,7 +150,6 @@ courseSchema.pre('save', function (next) {
       .replace(/[^\w\s-]/g, '')
       .replace(/\s+/g, '-');
   }
-  next();
 });
 
 module.exports = mongoose.model('Course', courseSchema);
