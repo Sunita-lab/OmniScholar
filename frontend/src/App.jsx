@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import StudentDashboard from './pages/StudentDashboard';
 import TeacherDashboard from './pages/TeacherDashboard';
+import Courses from './pages/Courses';
 
 function DashboardRouter() {
   const { user } = useAuth();
@@ -30,6 +31,16 @@ function App() {
             }
           />
           <Route path="/" element={<Navigate to="/login" />} />
+          <Route
+            path="/courses"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Courses />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
