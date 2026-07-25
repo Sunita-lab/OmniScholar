@@ -70,4 +70,32 @@ const getProfile = async (req, res) => {
   res.json(req.user);
 };
 
-module.exports = { registerUser, loginUser, getProfile };
+// @desc    Update logged-in user's profile
+// @route   PUT /api/auth/profile
+const updateProfile = async (req, res) => {
+  try {
+    const allowedFields = [
+      'fullName', 'bio', 'phone', 'dob', 'gender', 'institute',
+      'department', 'course', 'semester', 'skills', 'interests',
+      'socialLinks', 'learningGoals', 'avatar',
+    ];
+
+    const updates = {};
+    allowedFields.forEach((field) => {
+      if (req.body[field] !== undefined) {
+        updates[field] = req.body[field];
+      }
+    });
+
+    const user = await User.findByIdAndUpdate(req.user._id, updates, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { registerUser, loginUser, getProfile, updateProfile };

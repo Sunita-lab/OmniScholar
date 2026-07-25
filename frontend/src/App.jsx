@@ -12,6 +12,7 @@ import Assignments from './pages/Assignments';
 import AssignmentDetail from './pages/AssignmentDetail';
 import CreateCourse from './pages/CreateCourse';
 import CreateAssignment from './pages/CreateAssignment';
+import Profile from './pages/Profile';
 
 function DashboardRouter() {
   const { user } = useAuth();
@@ -96,6 +97,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/profile" element={<ProtectedRoute><DashboardLayout><Profile /></DashboardLayout></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
