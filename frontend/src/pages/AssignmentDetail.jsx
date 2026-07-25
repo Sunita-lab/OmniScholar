@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Clock, Award, FileText, Upload, CheckCircle2, Download } from 'lucide-react';
-import api from '../lib/api';
+import api, { FILE_BASE_URL} from '../lib/api';
 import { useAuth } from '../context/AuthContext';
 
 function useCountdown(deadline) {
@@ -147,7 +147,7 @@ export default function AssignmentDetail() {
               {assignment.attachments.map((a, i) => (
                 <a
                   key={i}
-                  href={`http://localhost:5000${a.fileUrl}`}
+                  href={`${FILE_BASE_URL}${a.fileUrl}`}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-3 p-3.5 border border-border rounded-[12px] hover:border-primary/40 transition-colors"
@@ -178,7 +178,7 @@ export default function AssignmentDetail() {
                 {mySubmission.files?.map((f, i) => (
                   <a
                     key={i}
-                    href={`http://localhost:5000${f.fileUrl}`}
+                    href={`${FILE_BASE_URL}${f.fileUrl}`}
                     target="_blank"
                     rel="noreferrer"
                     className="text-primary text-sm hover:underline flex items-center gap-1.5"
@@ -299,7 +299,7 @@ function SubmissionRow({ submission, maxMarks }) {
       {submission.files?.map((f, i) => (
         <a
           key={i}
-          href={`http://localhost:5000${f.fileUrl}`}
+          href={`${FILE_BASE_URL}${f.fileUrl}`}
           target="_blank"
           rel="noreferrer"
           className="text-primary text-sm hover:underline flex items-center gap-1.5 mb-2"
