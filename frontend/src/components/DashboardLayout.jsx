@@ -35,9 +35,13 @@ export default function DashboardLayout({ children }) {
         </div>
 
         <div className="relative z-10 p-6 flex items-center justify-between">
-          {!collapsed && (
-            <h1 className="text-xl font-bold text-white">OmniScholar</h1>
-          )}
+          <div className="flex items-center gap-2.5">
+  <img src="/logo.png" alt="OmniScholar" className="w-14 h-14" />
+  {!collapsed &&(<h1 className="text-xl font-bold" >
+    <span className="text-primary">Omni</span>
+      <span className="text-white">Scholar</span>
+  </h1>)}
+</div>
           <button
             onClick={() => setCollapsed(!collapsed)}
             className="text-slate-400 hover:text-white transition-colors"

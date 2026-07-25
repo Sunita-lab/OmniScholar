@@ -40,7 +40,11 @@ export default function Login() {
       <div className="hidden lg:flex lg:w-1/2 bg-secondary relative overflow-hidden items-center justify-center">
         <ConstellationBackground />
         <div className="relative z-10 text-center px-12">
-          <h1 className="text-5xl font-bold text-white mb-4">OmniScholar</h1>
+          <img src="/logo.png" alt="OmniScholar" className="w-20 h-20 mx-auto mb-5" />
+<h1 className="text-5xl font-bold mb-4">
+  <span className="text-primary">Omni</span>
+  <span className="text-white">Scholar</span>
+</h1>
           <p className="text-slate-300 text-lg">The universe of knowledge, mapped for you.</p>
         </div>
       </div>
