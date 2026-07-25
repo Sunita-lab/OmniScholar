@@ -8,6 +8,8 @@ import StudentDashboard from './pages/StudentDashboard';
 import TeacherDashboard from './pages/TeacherDashboard';
 import Courses from './pages/Courses';
 import CourseDetail from './pages/CourseDetail';
+import Assignments from './pages/Assignments';
+import AssignmentDetail from './pages/AssignmentDetail';
 
 function DashboardRouter() {
   const { user } = useAuth();
@@ -48,6 +50,26 @@ function App() {
               <ProtectedRoute>
                 <DashboardLayout>
                   <CourseDetail />
+                </DashboardLayout>
+              </ProtectedRoute>
+              }
+          />
+          <Route
+            path="/assignments"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <Assignments />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/assignments/:id"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <AssignmentDetail />
                 </DashboardLayout>
               </ProtectedRoute>
             }
