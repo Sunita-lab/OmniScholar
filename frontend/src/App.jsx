@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import StudentDashboard from './pages/StudentDashboard';
 import TeacherDashboard from './pages/TeacherDashboard';
 import Courses from './pages/Courses';
+import CourseDetail from './pages/CourseDetail';
 
 function DashboardRouter() {
   const { user } = useAuth();
@@ -37,6 +38,16 @@ function App() {
               <ProtectedRoute>
                 <DashboardLayout>
                   <Courses />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/courses/:id"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <CourseDetail />
                 </DashboardLayout>
               </ProtectedRoute>
             }
