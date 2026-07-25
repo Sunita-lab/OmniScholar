@@ -37,6 +37,22 @@ const getTeacherDashboard = async (req, res) => {
       .sort({ submittedAt: -1 })
       .limit(10);
 
+    // Course-wise quick breakdown
+const courseBreakdown = await Promise.all(
+  courses.map(async (c) => {
+    const studentCount = await Enrollment.countDocuments({ course: c._id });
+    return { _id: c._id, title: c.title, studentCount, thumbnail: c.thumbnail };
+  })
+);
+
+res.json({
+  totalCourses: courses.length,
+  totalStudents,
+  totalAssignments,
+  recentSubmissions,
+  courseBreakdown,
+});  
+
     res.json({
       totalCourses: courses.length,
       totalStudents,
