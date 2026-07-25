@@ -57,12 +57,22 @@ export default function Assignments() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-text-primary mb-1">Assignments</h1>
-        <p className="text-text-secondary">
-          {user.role === 'student' ? 'Track and submit your work.' : 'Manage assignments across your courses.'}
-        </p>
-      </div>
+      <div className="flex items-center justify-between">
+  <div>
+    <h1 className="text-3xl font-bold text-text-primary mb-1">Assignments</h1>
+    <p className="text-text-secondary">
+      {user.role === 'student' ? 'Track and submit your work.' : 'Manage assignments across your courses.'}
+    </p>
+  </div>
+  {user.role === 'teacher' && (
+    <button
+      onClick={() => navigate('/assignments/create')}
+      className="bg-primary hover:bg-primary-hover text-white font-medium px-5 py-2.5 rounded-[12px] transition-colors"
+    >
+      + Create Assignment
+    </button>
+  )}
+</div>
 
       {assignments.length === 0 ? (
         <div className="text-center py-16">

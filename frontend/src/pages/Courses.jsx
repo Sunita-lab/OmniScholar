@@ -61,10 +61,20 @@ export default function Courses() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-text-primary mb-1">Explore Courses</h1>
-        <p className="text-text-secondary">Discover your next skill.</p>
-      </div>
+      <div className="flex items-center justify-between">
+  <div>
+    <h1 className="text-3xl font-bold text-text-primary mb-1">Explore Courses</h1>
+    <p className="text-text-secondary">Discover your next skill.</p>
+  </div>
+  {user.role === 'teacher' && (
+    <button
+      onClick={() => navigate('/courses/create')}
+      className="bg-primary hover:bg-primary-hover text-white font-medium px-5 py-2.5 rounded-[12px] transition-colors"
+    >
+      + Create Course
+    </button>
+  )}
+</div>
 
       {/* Search */}
       <div className="relative">

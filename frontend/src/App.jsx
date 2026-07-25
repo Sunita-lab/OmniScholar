@@ -10,6 +10,8 @@ import Courses from './pages/Courses';
 import CourseDetail from './pages/CourseDetail';
 import Assignments from './pages/Assignments';
 import AssignmentDetail from './pages/AssignmentDetail';
+import CreateCourse from './pages/CreateCourse';
+import CreateAssignment from './pages/CreateAssignment';
 
 function DashboardRouter() {
   const { user } = useAuth();
@@ -70,6 +72,26 @@ function App() {
               <ProtectedRoute>
                 <DashboardLayout>
                   <AssignmentDetail />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/courses/create"
+            element={
+              <ProtectedRoute allowedRoles={['teacher']}>
+                <DashboardLayout>
+                  <CreateCourse />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/assignments/create"
+            element={
+              <ProtectedRoute allowedRoles={['teacher']}>
+                <DashboardLayout>
+                  <CreateAssignment />
                 </DashboardLayout>
               </ProtectedRoute>
             }
