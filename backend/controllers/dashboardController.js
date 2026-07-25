@@ -81,6 +81,34 @@ const getStudentDashboard = async (req, res) => {
     // Grade overview (sirf graded submissions)
     const gradedSubmissions = mySubmissions.filter((s) => s.status === 'graded');
 
+    // Pending assignments with deadline info (priority ke liye)
+const pendingWithDeadline = pendingAssignments
+  .map((a) => ({
+    _id: a._id,
+    title: a.title,
+    deadline: a.deadline,
+  }))
+  .sort((a, b) => new Date(a.deadline) - new Date(b.deadline))
+  .slice(0, 5);
+
+// Recent activity (submissions, latest first)
+const recentActivity = mySubmissions
+  .sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt))
+  .slice(0, 5);
+
+res.json({
+  enrolledCoursesCount: enrollments.length,
+  pendingAssignmentsCount: pendingAssignments.length,
+  submittedAssignmentsCount: mySubmissions.length,
+  pendingAssignments: pendingWithDeadline,
+  recentActivity,
+  gradeOverview: gradedSubmissions.map((s) => ({
+    assignment: s.assignment,
+    marks: s.marks,
+    feedback: s.feedback,
+  })),
+});
+
     res.json({
       enrolledCoursesCount: enrollments.length,
       pendingAssignmentsCount: pendingAssignments.length,

@@ -1,12 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardLayout from './components/DashboardLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import StudentDashboard from './pages/StudentDashboard';
+import TeacherDashboard from './pages/TeacherDashboard';
 
-function DashboardPlaceholder() {
-  return <h1 className="text-2xl font-bold text-text-primary">Welcome to your dashboard!</h1>;
+function DashboardRouter() {
+  const { user } = useAuth();
+  return user?.role === 'teacher' ? <TeacherDashboard /> : <StudentDashboard />;
 }
 
 function App() {
@@ -21,7 +24,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <DashboardLayout>
-                  <DashboardPlaceholder />
+                  <DashboardRouter />
                 </DashboardLayout>
               </ProtectedRoute>
             }
