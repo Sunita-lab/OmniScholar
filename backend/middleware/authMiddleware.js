@@ -1,22 +1,22 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Check karo ki user logged in hai (valid token hai)
+// Check karo if user is logged in (valid token)
 const protect = async (req, res, next) => {
   let token;
 
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
-      // Header aisa hota hai: "Bearer eyJhbGci..."
+      // Split header, keep only token
       token = req.headers.authorization.split(' ')[1];
 
-      // Token verify karo
+      // Token verify 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      // User ko database se le aao (password ke bina) aur request mein attach karo
+      // Fetch user form DB(without password) and attach with request
       req.user = await User.findById(decoded.id).select('-password');
 
-      next(); // sab theek hai, aage badho
+      next(); // All ok, move ahead
     } catch (error) {
       res.status(401).json({ message: 'Not authorized, token failed' });
     }
@@ -27,7 +27,7 @@ const protect = async (req, res, next) => {
   }
 };
 
-// Check karo ki user ke paas specific role hai
+// Check user has a specific role
 const authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {

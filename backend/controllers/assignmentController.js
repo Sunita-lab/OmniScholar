@@ -7,7 +7,7 @@ const createAssignment = async (req, res) => {
   try {
     const { course } = req.body;
 
-    // Check karo ki teacher hi is course ka instructor hai
+    // Check if the teacher is the instructor of this course
     const courseDoc = await Course.findById(course);
 
     if (!courseDoc) {

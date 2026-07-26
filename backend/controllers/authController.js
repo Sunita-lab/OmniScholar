@@ -7,14 +7,14 @@ const registerUser = async (req, res) => {
   try {
     const { fullName, username, email, password, role } = req.body;
 
-    // Check karo user pehle se exist to nahi karta
+    // Check if profile pre exists
     const userExists = await User.findOne({ $or: [{ email }, { username }] });
 
     if (userExists) {
       return res.status(400).json({ message: 'User already exists with this email or username' });
     }
 
-    // Naya user banao (password automatically hash ho jaayega pre-save hook se)
+    // Make new user
     const user = await User.create({
       fullName,
       username,
@@ -44,7 +44,7 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Password field ko explicitly select karo (schema mein select:false tha)
+    // Select Password field explicitly
     const user = await User.findOne({ email }).select('+password');
 
     if (user && (await user.matchPassword(password))) {

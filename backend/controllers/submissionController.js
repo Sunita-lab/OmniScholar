@@ -11,7 +11,7 @@ const submitAssignment = async (req, res) => {
       return res.status(404).json({ message: 'Assignment not found' });
     }
 
-    // Check karo already submit to nahi kiya
+    // Check if already submitted
     const existing = await Submission.findOne({
       student: req.user._id,
       assignment: assignment._id,
@@ -21,7 +21,7 @@ const submitAssignment = async (req, res) => {
       return res.status(400).json({ message: 'You have already submitted this assignment' });
     }
 
-    // Late hai ya nahi check karo
+    // Check if late submission
     const isLate = new Date() > new Date(assignment.deadline);
 
     const submission = await Submission.create({
@@ -90,12 +90,12 @@ const gradeSubmission = async (req, res) => {
       return res.status(404).json({ message: 'Submission not found' });
     }
 
-    // Check karo ki teacher hi is assignment ka creator hai
+    // Check that teacher only is the creator of assignment
     if (submission.assignment.createdBy.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: 'Not authorized to grade this submission' });
     }
 
-    // Marks maxMarks se zyada na ho
+    // Must not exceed max marks
     if (marks > submission.assignment.maxMarks) {
       return res.status(400).json({
         message: `Marks cannot exceed maximum marks (${submission.assignment.maxMarks})`,

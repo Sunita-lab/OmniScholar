@@ -77,11 +77,11 @@ const getStudentDashboard = async (req, res) => {
     );
     const courseIds = enrollments.map((e) => e.course._id);
 
-    // Sab assignments jo student ke enrolled courses ke hain
+    // All assignments in these courses
     const allAssignments = await Assignment.find({ course: { $in: courseIds } });
     const allAssignmentIds = allAssignments.map((a) => a._id);
 
-    // Student ki saari submissions
+    // All submission by student
     const mySubmissions = await Submission.find({
       student: studentId,
       assignment: { $in: allAssignmentIds },
@@ -89,15 +89,15 @@ const getStudentDashboard = async (req, res) => {
 
     const submittedAssignmentIds = mySubmissions.map((s) => s.assignment.toString());
 
-    // Pending = jo assignments hain lekin submit nahi kiye
+    // Pending 
     const pendingAssignments = allAssignments.filter(
       (a) => !submittedAssignmentIds.includes(a._id.toString())
     );
 
-    // Grade overview (sirf graded submissions)
+    // Grade overview (only graded submissions)
     const gradedSubmissions = mySubmissions.filter((s) => s.status === 'graded');
 
-    // Pending assignments with deadline info (priority ke liye)
+    // Pending assignments with deadline info (for priority)
 const pendingWithDeadline = pendingAssignments
   .map((a) => ({
     _id: a._id,

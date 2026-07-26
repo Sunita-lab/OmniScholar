@@ -26,7 +26,7 @@ const certificateSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Ek student ek course ke liye sirf ek certificate paaye
+// Only one certificate for one course
 certificateSchema.index({ student: 1, course: 1 }, { unique: true });
 
 module.exports = mongoose.model('Certificate', certificateSchema);

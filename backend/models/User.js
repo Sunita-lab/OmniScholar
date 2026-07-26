@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: '', // default placeholder image URL yahan bhi daal sakte ho
+      default: '', // default placeholder
     },
     bio: {
       type: String,
@@ -133,7 +133,7 @@ const userSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // createdAt aur updatedAt khud handle ho jaayega
+    timestamps: true, // createdAt aur updatedAt auto handle
   }
 );
 

@@ -7,7 +7,7 @@ const createCourse = async (req, res) => {
   try {
     const course = await Course.create({
       ...req.body,
-      instructor: req.user._id, // logged-in teacher hi instructor banega
+      instructor: req.user._id, // logged-in teacher will be the instructor
     });
 
     res.status(201).json(course);
@@ -24,7 +24,7 @@ const getCourses = async (req, res) => {
   try {
     const { search, category, difficulty, sort, page = 1, limit = 10 } = req.query;
 
-    // Query object banate hain dynamically
+    // Query object 
     const query = { status: 'published' };
 
     // Keyword search (title mein search karega)
@@ -106,8 +106,8 @@ const updateCourse = async (req, res) => {
     }
 
     const updatedCourse = await Course.findByIdAndUpdate(req.params.id, req.body, {
-      new: true, // updated document return karo, purana nahi
-      runValidators: true, // schema validations dobara check karo
+      new: true, // updated document return 
+      runValidators: true, // schema validations, check again
     });
 
     res.json(updatedCourse);
@@ -148,7 +148,7 @@ const enrollCourse = async (req, res) => {
       return res.status(404).json({ message: 'Course not found' });
     }
 
-    // Duplicate enrollment check (schema mein unique index bhi hai, but yahan friendly message dena better hai)
+    // Duplicate enrollment check 
     const alreadyEnrolled = await Enrollment.findOne({
       student: req.user._id,
       course: course._id,

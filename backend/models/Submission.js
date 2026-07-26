@@ -50,7 +50,7 @@ const submissionSchema = new mongoose.Schema(
   }
 );
 
-// Ek student ek assignment sirf ek baar submit kare (initially)
+// One student can submit one assignment only once
 submissionSchema.index({ student: 1, assignment: 1 }, { unique: true });
 
 module.exports = mongoose.model('Submission', submissionSchema);

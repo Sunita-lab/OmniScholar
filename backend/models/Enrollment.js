@@ -33,7 +33,7 @@ const enrollmentSchema = new mongoose.Schema(
   }
 );
 
-// Ek student ek course mein sirf ek baar enroll ho sake
+// One student can enroll ONCE in one course
 enrollmentSchema.index({ student: 1, course: 1 }, { unique: true });
 
 module.exports = mongoose.model('Enrollment', enrollmentSchema);
