@@ -13,6 +13,7 @@ import AssignmentDetail from './pages/AssignmentDetail';
 import CreateCourse from './pages/CreateCourse';
 import CreateAssignment from './pages/CreateAssignment';
 import Profile from './pages/Profile';
+import Landing from './pages/Landing';
 
 function DashboardRouter() {
   const { user } = useAuth();
@@ -36,7 +37,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/" element={<Landing />} />
           <Route
             path="/courses"
             element={
