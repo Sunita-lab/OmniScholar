@@ -1,18 +1,19 @@
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Award, Users, Sparkles, ArrowRight, CheckCircle,UserPlus, Compass,TrendingUp } from 'lucide-react';
+import { useState } from 'react';
+import { BookOpen, Award, Users, Sparkles, ArrowRight, CheckCircle,UserPlus, Compass,TrendingUp, Menu, X } from 'lucide-react';
 
 export default function Landing() {
   const navigate = useNavigate();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
      {/* Navbar */}
 <nav className="sticky top-0 z-50 bg-secondary/95 backdrop-blur-md border-b border-white/10">
-  <div className="flex items-center justify-between px-8 py-4 max-w-7xl mx-auto">
-    {/* Logo */}
-    <div className="flex items-center gap-3">
-      <img src="/logo.png" alt="OmniScholar" className="w-9 h-9" />
-      <span className="text-xl font-bold">
+  <div className="flex items-center justify-between px-5 sm:px-8 py-4 max-w-7xl mx-auto">
+    <div className="flex items-center gap-2.5 sm:gap-3">
+      <img src="/logo.png" alt="OmniScholar" className="w-11 h-11 sm:w-14 sm:h-12" />
+      <span className="text-lg sm:text-xl font-bold">
         <span className="text-primary">Omni</span>
         <span className="text-white">Scholar</span>
       </span>
@@ -21,38 +22,47 @@ export default function Landing() {
       </span>
     </div>
 
-    {/* Center Nav Links */}
     <div className="hidden lg:flex items-center gap-8">
-      <a href="#features" className="text-slate-300 text-sm font-medium hover:text-primary transition-colors">
-        Features
-      </a>
-      <a href="#how-it-works" className="text-slate-300 text-sm font-medium hover:text-primary transition-colors">
-        How It Works
-      </a>
-      <a href="#for-teachers" className="text-slate-300 text-sm font-medium hover:text-primary transition-colors">
-        For Teachers
-      </a>
+      <a href="#features" className="text-slate-300 text-sm font-medium hover:text-primary transition-colors">Features</a>
+      <a href="#how-it-works" className="text-slate-300 text-sm font-medium hover:text-primary transition-colors">How It Works</a>
+      <a href="#for-teachers" className="text-slate-300 text-sm font-medium hover:text-primary transition-colors">For Teachers</a>
     </div>
 
-    {/* Right Buttons */}
-    <div className="flex items-center gap-2">
-      <button
-        onClick={() => navigate('/login')}
-        className="text-white font-medium px-5 py-2.5 rounded-[12px] hover:bg-white/10 transition-colors"
-      >
+    <div className="hidden lg:flex items-center gap-2">
+      <button onClick={() => navigate('/login')} className="text-white font-medium px-5 py-2.5 rounded-[12px] hover:bg-white/10 transition-colors">
         Log In
       </button>
-      <button
-        onClick={() => navigate('/register')}
-        className="flex items-center gap-1.5 bg-primary hover:bg-primary-hover text-white font-medium px-5 py-2.5 rounded-[12px] shadow-sm transition-colors"
-      >
-        Get Started
-        <ArrowRight size={15} />
+      <button onClick={() => navigate('/register')} className="flex items-center gap-1.5 bg-primary hover:bg-primary-hover text-white font-medium px-5 py-2.5 rounded-[12px] shadow-sm transition-colors">
+        Get Started <ArrowRight size={15} />
       </button>
     </div>
-  </div>
-</nav>
 
+    {/* Mobile hamburger */}
+    <button
+      onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+      className="lg:hidden text-white p-2"
+    >
+      {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+    </button>
+  </div>
+
+  {/* Mobile menu dropdown */}
+  {mobileMenuOpen && (
+    <div className="lg:hidden bg-secondary border-t border-white/10 px-5 py-4 space-y-3">
+      <a href="#features" onClick={() => setMobileMenuOpen(false)} className="block text-slate-300 text-sm font-medium py-2">Features</a>
+      <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="block text-slate-300 text-sm font-medium py-2">How It Works</a>
+      <a href="#for-teachers" onClick={() => setMobileMenuOpen(false)} className="block text-slate-300 text-sm font-medium py-2">For Teachers</a>
+      <div className="flex flex-col gap-2 pt-2">
+        <button onClick={() => navigate('/login')} className="text-white font-medium px-5 py-2.5 rounded-[12px] border border-white/20 text-center">
+          Log In
+        </button>
+        <button onClick={() => navigate('/register')} className="bg-primary text-white font-medium px-5 py-2.5 rounded-[12px] text-center">
+          Get Started
+        </button>
+      </div>
+    </div>
+  )}
+</nav>
       {/* Hero */}
       <section className="relative bg-secondary overflow-hidden">
         <img
@@ -62,22 +72,22 @@ export default function Landing() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-secondary via-secondary/70 to-transparent" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-8 py-28 lg:py-36">
+        <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-28 lg:py-36">
           <div className="max-w-xl">
             <span className="inline-flex items-center gap-1.5 text-accent text-sm font-medium bg-accent/10 px-3.5 py-1.5 rounded-full mb-6">
               <Sparkles size={14} /> The Universe of Knowledge
             </span>
-            <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               Learning, mapped like the stars.
             </h1>
             <p className="text-slate-300 text-lg mb-8">
               OmniScholar connects courses, assignments, and progress into one
               constellation — helping you see exactly where you are, and what's next.
             </p>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
               <button
                 onClick={() => navigate('/register')}
-                className="flex items-center gap-2 bg-primary hover:bg-primary-hover text-white font-medium px-7 py-3.5 rounded-[12px] transition-colors"
+                className="flex items-center gap-4 bg-primary hover:bg-primary-hover text-white font-medium px-7 py-3.5 rounded-[12px] transition-colors"
               >
                 Start Learning <ArrowRight size={18} />
               </button>
@@ -93,7 +103,7 @@ export default function Landing() {
       </section>
 
       {/* How It Works */}
-<section id="how-it-works" className="bg-secondary px-8 py-24 relative overflow-hidden">
+<section id="how-it-works" className="bg-secondary px-5 sm:px-8 py-24 relative overflow-hidden">
   <div className="max-w-7xl mx-auto relative">
     <div className="text-center mb-16">
       <span className="inline-flex items-center gap-1.5 text-primary text-sm font-medium bg-primary/10 px-3.5 py-1.5 rounded-full mb-5">
