@@ -84,20 +84,20 @@ export default function Landing() {
               OmniScholar connects courses, assignments, and progress into one
               constellation — helping you see exactly where you are, and what's next.
             </p>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-              <button
-                onClick={() => navigate('/register')}
-                className="flex items-center gap-4 bg-primary hover:bg-primary-hover text-white font-medium px-7 py-3.5 rounded-[12px] transition-colors"
-              >
-                Start Learning <ArrowRight size={18} />
-              </button>
-              <button
-                onClick={() => navigate('/login')}
-                className="text-white font-medium px-7 py-3.5 rounded-[12px] border border-white/20 hover:bg-white/5 transition-colors"
-              >
-                Log In
-              </button>
-            </div>
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4">
+  <button
+    onClick={() => navigate('/register')}
+    className="w-full sm:w-auto flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white font-medium px-7 py-3.5 rounded-[12px] transition-colors"
+  >
+    Start Learning <ArrowRight size={18} />
+  </button>
+  <button
+    onClick={() => navigate('/login')}
+    className="w-full sm:w-auto flex items-center justify-center text-white font-medium px-7 py-3.5 rounded-[12px] border border-white/20 hover:bg-white/5 transition-colors"
+  >
+    Log In
+  </button>
+</div>
           </div>
         </div>
       </section>
