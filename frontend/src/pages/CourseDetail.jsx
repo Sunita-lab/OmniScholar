@@ -32,7 +32,6 @@ export default function CourseDetail() {
         const { data } = await api.get(`/courses/${id}`);
         setCourse(data);
 
-        // Related courses (same category, excluding self)
         const relRes = await api.get('/courses', { params: { category: data.category, limit: 4 } });
         setRelated(relRes.data.courses.filter((c) => c._id !== id).slice(0, 3));
 
@@ -67,10 +66,10 @@ export default function CourseDetail() {
   const totalLessons = course.modules?.reduce((acc, m) => acc + (m.lessons?.length || 0), 0) || 0;
 
   return (
-    <div className="-m-8">
+    <div className="-m-5 sm:-m-8">
       {/* Hero */}
-      <div className="bg-secondary px-8 py-14">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+      <div className="bg-secondary px-5 sm:px-8 py-10 sm:py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
           {/* Left: Info */}
           <div>
             <div className="flex flex-wrap gap-2 mb-4">
@@ -79,13 +78,13 @@ export default function CourseDetail() {
               <Badge>{course.language}</Badge>
             </div>
 
-            <h1 className="text-4xl lg:text-5xl font-bold text-white mb-3 leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 leading-tight">
               {course.title}
             </h1>
-            <p className="text-slate-300 text-lg mb-6">{course.subtitle || course.description}</p>
+            <p className="text-slate-300 text-base sm:text-lg mb-6">{course.subtitle || course.description}</p>
 
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-full bg-primary/30 flex items-center justify-center text-white font-semibold">
+              <div className="w-10 h-10 rounded-full bg-primary/30 flex items-center justify-center text-white font-semibold shrink-0">
                 {course.instructor?.fullName?.charAt(0)}
               </div>
               <div>
@@ -94,7 +93,7 @@ export default function CourseDetail() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-5 text-slate-300 text-sm mb-8">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-5 text-slate-300 text-sm mb-8">
               <span className="flex items-center gap-1.5">
                 <Users size={16} /> {course.totalStudents} learners
               </span>
@@ -115,7 +114,7 @@ export default function CourseDetail() {
               <button
                 onClick={handleEnroll}
                 disabled={isEnrolled || enrolling}
-                className="bg-primary hover:bg-primary-hover text-white font-medium px-8 py-3.5 rounded-[12px] transition-colors disabled:opacity-70"
+                className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white font-medium px-8 py-3.5 rounded-[12px] transition-colors disabled:opacity-70"
               >
                 {isEnrolled ? 'Enrolled ✓' : enrolling ? 'Enrolling...' : 'Enroll Now'}
               </button>
@@ -123,17 +122,17 @@ export default function CourseDetail() {
           </div>
 
           {/* Right: Module Constellation Preview */}
-          <div className="relative h-80 bg-white/5 rounded-[16px] border border-white/10 flex items-center justify-center overflow-hidden">
+          <div className="relative h-56 sm:h-72 lg:h-80 bg-white/5 rounded-[16px] border border-white/10 flex items-center justify-center overflow-hidden">
             <ModuleConstellation modules={course.modules} />
           </div>
         </div>
       </div>
 
       {/* Body */}
-      <div className="bg-background px-8 py-10 space-y-8">
+      <div className="bg-background px-5 sm:px-8 py-8 sm:py-10 space-y-6 sm:space-y-8">
         {/* Course Overview */}
-        <div className="bg-surface rounded-[16px] border border-border p-6">
-          <h2 className="text-2xl font-bold text-text-primary mb-4">Course Overview</h2>
+        <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-text-primary mb-4">Course Overview</h2>
           <p className="text-text-secondary mb-6">{course.description}</p>
 
           {course.learningObjectives?.length > 0 && (
@@ -165,17 +164,17 @@ export default function CourseDetail() {
         </div>
 
         {/* Modules Accordion */}
-        <div className="bg-surface rounded-[16px] border border-border p-6">
-          <h2 className="text-2xl font-bold text-text-primary mb-4">Course Content</h2>
+        <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6">
+          <h2 className="text-xl sm:text-2xl font-bold text-text-primary mb-4">Course Content</h2>
           <div className="space-y-3">
             {course.modules?.map((module, idx) => (
               <div key={module._id || idx} className="border border-border rounded-[12px] overflow-hidden">
                 <button
                   onClick={() => setExpandedModule(expandedModule === idx ? -1 : idx)}
-                  className="w-full flex items-center justify-between px-4 py-3.5 hover:bg-background transition-colors"
+                  className="w-full flex items-center justify-between gap-3 px-4 py-3.5 hover:bg-background transition-colors"
                 >
-                  <div className="text-left">
-                    <p className="font-medium text-text-primary">
+                  <div className="text-left min-w-0">
+                    <p className="font-medium text-text-primary truncate">
                       Module {idx + 1}: {module.title}
                     </p>
                     <p className="text-text-secondary text-xs mt-0.5">
@@ -184,7 +183,7 @@ export default function CourseDetail() {
                   </div>
                   <ChevronDown
                     size={18}
-                    className={`text-text-secondary transition-transform ${expandedModule === idx ? 'rotate-180' : ''}`}
+                    className={`text-text-secondary transition-transform shrink-0 ${expandedModule === idx ? 'rotate-180' : ''}`}
                   />
                 </button>
                 {expandedModule === idx && (
@@ -193,15 +192,15 @@ export default function CourseDetail() {
                       const Icon = lessonIcons[lesson.contentType] || FileText;
                       return (
                         <div key={lesson._id || lIdx} className="flex items-center gap-3 py-2.5">
-                          <Icon size={16} className="text-text-secondary" />
-                          <span className="text-sm text-text-primary flex-1">{lesson.title}</span>
+                          <Icon size={16} className="text-text-secondary shrink-0" />
+                          <span className="text-sm text-text-primary flex-1 min-w-0 truncate">{lesson.title}</span>
                           {lesson.duration > 0 && (
-                            <span className="text-xs text-text-secondary">{lesson.duration} min</span>
+                            <span className="text-xs text-text-secondary shrink-0">{lesson.duration} min</span>
                           )}
                           {isEnrolled ? (
-                            <PlayCircle size={16} className="text-primary" />
+                            <PlayCircle size={16} className="text-primary shrink-0" />
                           ) : (
-                            <Lock size={14} className="text-text-secondary" />
+                            <Lock size={14} className="text-text-secondary shrink-0" />
                           )}
                         </div>
                       );
@@ -221,8 +220,8 @@ export default function CourseDetail() {
 
         {/* Resources */}
         {course.resources?.length > 0 && (
-          <div className="bg-surface rounded-[16px] border border-border p-6">
-            <h2 className="text-2xl font-bold text-text-primary mb-4">Resources</h2>
+          <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-text-primary mb-4">Resources</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {course.resources.map((r, i) => (
                 <a
@@ -232,7 +231,7 @@ export default function CourseDetail() {
                   rel="noreferrer"
                   className="flex items-center gap-3 p-3.5 border border-border rounded-[12px] hover:border-primary/40 transition-colors"
                 >
-                  <FileText size={18} className="text-primary" />
+                  <FileText size={18} className="text-primary shrink-0" />
                   <span className="text-sm text-text-primary truncate">{r.title}</span>
                 </a>
               ))}
@@ -243,7 +242,7 @@ export default function CourseDetail() {
         {/* Related Courses */}
         {related.length > 0 && (
           <div>
-            <h2 className="text-2xl font-bold text-text-primary mb-4">Related Courses</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-text-primary mb-4">Related Courses</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {related.map((c) => (
                 <CourseCard key={c._id} course={c} isEnrolled={false} onClick={() => navigate(`/courses/${c._id}`)} />

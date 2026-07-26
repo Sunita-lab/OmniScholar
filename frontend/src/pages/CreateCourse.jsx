@@ -56,11 +56,11 @@ export default function CreateCourse() {
 
   return (
     <div className="max-w-3xl">
-      <h1 className="text-3xl font-bold text-text-primary mb-1">Create a New Course</h1>
-      <p className="text-text-secondary mb-8">Fill in the details to publish your course.</p>
+      <h1 className="text-2xl sm:text-3xl font-bold text-text-primary mb-1">Create a New Course</h1>
+      <p className="text-text-secondary mb-6 sm:mb-8">Fill in the details to publish your course.</p>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-surface rounded-[16px] border border-border p-6 space-y-4">
+        <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6 space-y-4">
           <Field label="Title">
             <input
               name="title"
@@ -91,7 +91,7 @@ export default function CreateCourse() {
             />
           </Field>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="Category">
               <select name="category" value={formData.category} onChange={handleChange} className="input">
                 {categories.map((c) => (
@@ -121,7 +121,7 @@ export default function CreateCourse() {
         </div>
 
         {/* Learning Objectives */}
-        <div className="bg-surface rounded-[16px] border border-border p-6">
+        <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6">
           <h3 className="font-semibold text-text-primary mb-3">Learning Objectives</h3>
           <DynamicList
             items={objectives}
@@ -133,7 +133,7 @@ export default function CreateCourse() {
         </div>
 
         {/* Prerequisites */}
-        <div className="bg-surface rounded-[16px] border border-border p-6">
+        <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6">
           <h3 className="font-semibold text-text-primary mb-3">Prerequisites</h3>
           <DynamicList
             items={prerequisites}
@@ -149,7 +149,7 @@ export default function CreateCourse() {
         <button
           type="submit"
           disabled={saving}
-          className="bg-primary hover:bg-primary-hover text-white font-medium px-8 py-3 rounded-[12px] transition-colors disabled:opacity-60"
+          className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white font-medium px-8 py-3 rounded-[12px] transition-colors disabled:opacity-60"
         >
           {saving ? 'Creating...' : 'Create Course'}
         </button>
@@ -179,7 +179,7 @@ function DynamicList({ items, onUpdate, onAdd, onRemove, placeholder }) {
             className="input flex-1"
           />
           {items.length > 1 && (
-            <button type="button" onClick={() => onRemove(i)} className="text-text-secondary hover:text-error">
+            <button type="button" onClick={() => onRemove(i)} className="text-text-secondary hover:text-error shrink-0">
               <X size={16} />
             </button>
           )}

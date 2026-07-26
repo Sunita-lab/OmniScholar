@@ -61,8 +61,8 @@ export default function Profile() {
   return (
     <div className="max-w-4xl space-y-6">
       {/* Header */}
-      <div className="bg-secondary rounded-[16px] p-8 relative overflow-hidden">
-        <div className="relative z-10 flex items-center gap-5">
+      <div className="bg-secondary rounded-[16px] p-6 sm:p-8 relative overflow-hidden">
+        <div className="relative z-10 flex flex-col sm:flex-row items-center gap-4 sm:gap-5 text-center sm:text-left">
           <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center text-white text-2xl font-bold shrink-0">
             {profile.fullName?.charAt(0)}
           </div>
@@ -75,7 +75,7 @@ export default function Profile() {
           </div>
           <button
             onClick={() => setEditing(!editing)}
-            className="ml-auto bg-white/10 hover:bg-white/20 text-white text-sm font-medium px-4 py-2 rounded-[10px] transition-colors"
+            className="w-full sm:w-auto sm:ml-auto bg-white/10 hover:bg-white/20 text-white text-sm font-medium px-4 py-2 rounded-[10px] transition-colors"
           >
             {editing ? 'Cancel' : 'Edit Profile'}
           </button>
@@ -83,7 +83,7 @@ export default function Profile() {
       </div>
 
       {/* Learning Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         <StatBox icon={Flame} label="Streak" value={profile.streak} />
         <StatBox icon={Award} label="XP" value={profile.xp} accent />
         <StatBox icon={GraduationCap} label="Level" value={profile.level} />
@@ -92,14 +92,14 @@ export default function Profile() {
 
       {editing ? (
         /* Edit Form */
-        <div className="bg-surface rounded-[16px] border border-border p-6 space-y-4">
+        <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6 space-y-4">
           <Field label="Full Name">
             <input name="fullName" value={formData.fullName} onChange={handleChange} className="input" />
           </Field>
           <Field label="Bio">
             <textarea name="bio" value={formData.bio} onChange={handleChange} rows={3} className="input" />
           </Field>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Field label="Phone">
               <input name="phone" value={formData.phone} onChange={handleChange} className="input" />
             </Field>
@@ -123,7 +123,7 @@ export default function Profile() {
                 </span>
               ))}
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <input
                 value={skillInput}
                 onChange={(e) => setSkillInput(e.target.value)}
@@ -131,8 +131,8 @@ export default function Profile() {
                 placeholder="Add a skill and press Enter"
                 className="input flex-1"
               />
-              <button type="button" onClick={addSkill} className="bg-primary text-white px-4 rounded-[12px]">
-                <Plus size={16} />
+              <button type="button" onClick={addSkill} className="bg-primary text-white px-4 py-2 sm:py-0 rounded-[12px] flex items-center justify-center gap-1.5">
+                <Plus size={16} /> <span className="sm:hidden">Add Skill</span>
               </button>
             </div>
           </Field>
@@ -140,14 +140,14 @@ export default function Profile() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="bg-primary hover:bg-primary-hover text-white font-medium px-6 py-2.5 rounded-[12px] transition-colors disabled:opacity-60"
+            className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white font-medium px-6 py-2.5 rounded-[12px] transition-colors disabled:opacity-60"
           >
             {saving ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
       ) : (
         /* View Mode */
-        <div className="bg-surface rounded-[16px] border border-border p-6 space-y-5">
+        <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6 space-y-5">
           {profile.bio && <p className="text-text-secondary">{profile.bio}</p>}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
@@ -177,9 +177,9 @@ export default function Profile() {
 
 function StatBox({ icon: Icon, label, value, accent = false }) {
   return (
-    <div className="bg-surface rounded-[16px] border border-border p-4 text-center">
+    <div className="bg-surface rounded-[16px] border border-border p-3 sm:p-4 text-center">
       <Icon size={18} className={`mx-auto mb-2 ${accent ? 'text-accent' : 'text-primary'}`} />
-      <p className={`text-xl font-bold font-mono ${accent ? 'text-accent' : 'text-text-primary'}`}>{value}</p>
+      <p className={`text-lg sm:text-xl font-bold font-mono ${accent ? 'text-accent' : 'text-text-primary'}`}>{value}</p>
       <p className="text-text-secondary text-xs">{label}</p>
     </div>
   );
@@ -187,9 +187,9 @@ function StatBox({ icon: Icon, label, value, accent = false }) {
 
 function InfoRow({ icon: Icon, label }) {
   return (
-    <div className="flex items-center gap-2.5 text-text-secondary">
-      <Icon size={16} className="text-text-secondary" />
-      {label}
+    <div className="flex items-center gap-2.5 text-text-secondary min-w-0">
+      <Icon size={16} className="text-text-secondary shrink-0" />
+      <span className="truncate">{label}</span>
     </div>
   );
 }

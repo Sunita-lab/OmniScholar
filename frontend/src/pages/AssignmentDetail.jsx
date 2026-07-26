@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Clock, Award, FileText, Upload, CheckCircle2, Download } from 'lucide-react';
-import api, { FILE_BASE_URL} from '../lib/api';
+import api, { FILE_BASE_URL } from '../lib/api';
 import { useAuth } from '../context/AuthContext';
 
 function useCountdown(deadline) {
@@ -93,15 +93,15 @@ export default function AssignmentDetail() {
   const isUrgent = new Date(assignment.deadline) - new Date() < 24 * 60 * 60 * 1000;
 
   return (
-    <div className="-m-8">
+    <div className="-m-5 sm:-m-8">
       {/* Hero */}
-      <div className="bg-secondary px-8 py-12">
+      <div className="bg-secondary px-5 sm:px-8 py-10 sm:py-12">
         <div className="flex flex-wrap gap-2 mb-4">
           <Badge>{assignment.submissionType}</Badge>
           <Badge>{assignment.maxMarks} Marks</Badge>
         </div>
-        <h1 className="text-4xl font-bold text-white mb-3">{assignment.title}</h1>
-        <p className="text-slate-300 text-lg max-w-2xl mb-6">{assignment.description}</p>
+        <h1 className="text-2xl sm:text-4xl font-bold text-white mb-3">{assignment.title}</h1>
+        <p className="text-slate-300 text-base sm:text-lg max-w-2xl mb-6">{assignment.description}</p>
 
         <div className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-[12px] ${isUrgent ? 'bg-warning/20' : 'bg-white/10'}`}>
           <Clock size={16} className={isUrgent ? 'text-warning' : 'text-white'} />
@@ -112,20 +112,20 @@ export default function AssignmentDetail() {
       </div>
 
       {/* Body */}
-      <div className="bg-background px-8 py-10 space-y-6 max-w-4xl">
+      <div className="bg-background px-5 sm:px-8 py-8 sm:py-10 space-y-6 max-w-4xl">
         {/* Rubric */}
         {assignment.rubric?.length > 0 && (
-          <div className="bg-surface rounded-[16px] border border-border p-6">
+          <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6">
             <div className="flex items-center gap-2 mb-4">
               <Award size={18} className="text-primary" />
-              <h2 className="text-xl font-bold text-text-primary">Grading Rubric</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-text-primary">Grading Rubric</h2>
             </div>
             <div className="space-y-3">
               {assignment.rubric.map((r, i) => (
                 <div key={i}>
-                  <div className="flex justify-between text-sm mb-1">
+                  <div className="flex justify-between text-sm mb-1 gap-2">
                     <span className="text-text-primary font-medium">{r.criterion}</span>
-                    <span className="text-text-secondary font-mono">{r.maxPoints} pts</span>
+                    <span className="text-text-secondary font-mono shrink-0">{r.maxPoints} pts</span>
                   </div>
                   <div className="h-1.5 bg-border rounded-full overflow-hidden">
                     <div
@@ -141,8 +141,8 @@ export default function AssignmentDetail() {
 
         {/* Resources */}
         {assignment.attachments?.length > 0 && (
-          <div className="bg-surface rounded-[16px] border border-border p-6">
-            <h2 className="text-xl font-bold text-text-primary mb-4">Resources</h2>
+          <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-bold text-text-primary mb-4">Resources</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {assignment.attachments.map((a, i) => (
                 <a
@@ -163,8 +163,8 @@ export default function AssignmentDetail() {
 
         {/* Student: Submission Workspace */}
         {user.role === 'student' && (
-          <div className="bg-surface rounded-[16px] border border-border p-6">
-            <h2 className="text-xl font-bold text-text-primary mb-4">Your Submission</h2>
+          <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-bold text-text-primary mb-4">Your Submission</h2>
 
             {mySubmission ? (
               <div>
@@ -183,7 +183,7 @@ export default function AssignmentDetail() {
                     rel="noreferrer"
                     className="text-primary text-sm hover:underline flex items-center gap-1.5"
                   >
-                    <FileText size={14} /> {f.title}
+                    <FileText size={14} className="shrink-0" /> <span className="truncate">{f.title}</span>
                   </a>
                 ))}
 
@@ -212,9 +212,9 @@ export default function AssignmentDetail() {
                   />
                 )}
                 {(assignment.submissionType === 'file' || assignment.submissionType === 'both') && (
-                  <label className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-border rounded-[12px] p-8 cursor-pointer hover:border-primary/40 transition-colors">
+                  <label className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-border rounded-[12px] p-6 sm:p-8 cursor-pointer hover:border-primary/40 transition-colors">
                     <Upload size={24} className="text-text-secondary" />
-                    <span className="text-sm text-text-secondary">
+                    <span className="text-sm text-text-secondary text-center px-2">
                       {file ? file.name : 'Click to upload a file'}
                     </span>
                     <input type="file" className="hidden" onChange={(e) => setFile(e.target.files[0])} />
@@ -234,8 +234,8 @@ export default function AssignmentDetail() {
 
         {/* Teacher: Submissions List */}
         {user.role === 'teacher' && (
-          <div className="bg-surface rounded-[16px] border border-border p-6">
-            <h2 className="text-xl font-bold text-text-primary mb-4">
+          <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6">
+            <h2 className="text-lg sm:text-xl font-bold text-text-primary mb-4">
               Submissions ({submissions.length})
             </h2>
             {submissions.length === 0 ? (
@@ -282,14 +282,14 @@ function SubmissionRow({ submission, maxMarks }) {
 
   return (
     <div className="border border-border rounded-[12px] p-4">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center text-primary text-xs font-semibold">
+      <div className="flex items-center justify-between mb-3 gap-2">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-8 h-8 rounded-full bg-primary/15 flex items-center justify-center text-primary text-xs font-semibold shrink-0">
             {submission.student?.fullName?.charAt(0)}
           </div>
-          <span className="text-sm font-medium text-text-primary">{submission.student?.fullName}</span>
+          <span className="text-sm font-medium text-text-primary truncate">{submission.student?.fullName}</span>
         </div>
-        <span className={`text-xs px-2 py-1 rounded-full capitalize ${
+        <span className={`text-xs px-2 py-1 rounded-full capitalize shrink-0 ${
           submission.status === 'late' ? 'bg-warning/15 text-warning' : 'bg-primary/15 text-primary'
         }`}>
           {submission.status}
@@ -304,21 +304,21 @@ function SubmissionRow({ submission, maxMarks }) {
           rel="noreferrer"
           className="text-primary text-sm hover:underline flex items-center gap-1.5 mb-2"
         >
-          <FileText size={14} /> {f.title}
+          <FileText size={14} className="shrink-0" /> <span className="truncate">{f.title}</span>
         </a>
       ))}
       {submission.textSubmission && (
         <p className="text-text-secondary text-sm mb-3">{submission.textSubmission}</p>
       )}
 
-      <div className="flex items-center gap-2 mt-3">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mt-3">
         <input
           type="number"
           value={marks}
           onChange={(e) => setMarks(e.target.value)}
           placeholder="Marks"
           max={maxMarks}
-          className="w-20 rounded-[10px] border border-border px-2.5 py-1.5 text-sm"
+          className="w-full sm:w-20 rounded-[10px] border border-border px-2.5 py-1.5 text-sm"
         />
         <input
           type="text"
@@ -330,7 +330,7 @@ function SubmissionRow({ submission, maxMarks }) {
         <button
           onClick={handleGrade}
           disabled={saving || !marks}
-          className="bg-primary hover:bg-primary-hover text-white text-sm font-medium px-4 py-1.5 rounded-[10px] transition-colors disabled:opacity-50"
+          className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white text-sm font-medium px-4 py-1.5 rounded-[10px] transition-colors disabled:opacity-50"
         >
           {graded ? 'Update' : 'Grade'}
         </button>

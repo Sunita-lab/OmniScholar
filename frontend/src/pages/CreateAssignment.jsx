@@ -59,11 +59,11 @@ export default function CreateAssignment() {
 
   return (
     <div className="max-w-3xl">
-      <h1 className="text-3xl font-bold text-text-primary mb-1">Create Assignment</h1>
-      <p className="text-text-secondary mb-8">Set up a new assignment for your students.</p>
+      <h1 className="text-2xl sm:text-3xl font-bold text-text-primary mb-1">Create Assignment</h1>
+      <p className="text-text-secondary mb-6 sm:mb-8">Set up a new assignment for your students.</p>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="bg-surface rounded-[16px] border border-border p-6 space-y-4">
+        <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6 space-y-4">
           <Field label="Course">
             <select name="course" value={formData.course} onChange={handleChange} required className="input">
               <option value="">Select a course</option>
@@ -88,7 +88,7 @@ export default function CreateAssignment() {
             />
           </Field>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <Field label="Deadline">
               <input
                 type="datetime-local"
@@ -120,33 +120,35 @@ export default function CreateAssignment() {
         </div>
 
         {/* Rubric */}
-        <div className="bg-surface rounded-[16px] border border-border p-6">
+        <div className="bg-surface rounded-[16px] border border-border p-5 sm:p-6">
           <h3 className="font-semibold text-text-primary mb-3">Grading Rubric</h3>
           <div className="space-y-2">
             {rubric.map((r, i) => (
-              <div key={i} className="flex items-center gap-2">
+              <div key={i} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                 <input
                   value={r.criterion}
                   onChange={(e) => updateRubric(i, 'criterion', e.target.value)}
                   placeholder="e.g. Code Quality"
                   className="input flex-1"
                 />
-                <input
-                  type="number"
-                  value={r.maxPoints}
-                  onChange={(e) => updateRubric(i, 'maxPoints', e.target.value)}
-                  placeholder="Points"
-                  className="input w-24"
-                />
-                {rubric.length > 1 && (
-                  <button
-                    type="button"
-                    onClick={() => setRubric(rubric.filter((_, idx) => idx !== i))}
-                    className="text-text-secondary hover:text-error"
-                  >
-                    <X size={16} />
-                  </button>
-                )}
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    value={r.maxPoints}
+                    onChange={(e) => updateRubric(i, 'maxPoints', e.target.value)}
+                    placeholder="Points"
+                    className="input w-full sm:w-24"
+                  />
+                  {rubric.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => setRubric(rubric.filter((_, idx) => idx !== i))}
+                      className="text-text-secondary hover:text-error shrink-0"
+                    >
+                      <X size={16} />
+                    </button>
+                  )}
+                </div>
               </div>
             ))}
             <button
@@ -164,7 +166,7 @@ export default function CreateAssignment() {
         <button
           type="submit"
           disabled={saving}
-          className="bg-primary hover:bg-primary-hover text-white font-medium px-8 py-3 rounded-[12px] transition-colors disabled:opacity-60"
+          className="w-full sm:w-auto bg-primary hover:bg-primary-hover text-white font-medium px-8 py-3 rounded-[12px] transition-colors disabled:opacity-60"
         >
           {saving ? 'Creating...' : 'Create Assignment'}
         </button>
