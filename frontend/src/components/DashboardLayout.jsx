@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, BookOpen, ClipboardList, User, LogOut, Menu, ChevronLeft } from 'lucide-react';
+import { LayoutDashboard, BookOpen, ClipboardList, User, LogOut, Menu, ChevronLeft, Award } from 'lucide-react';
 import ConstellationBackground from './ConstellationBackground';
 import { useAuth } from '../context/AuthContext';
 
@@ -20,6 +20,7 @@ export default function DashboardLayout({ children }) {
     { icon: BookOpen, label: 'Courses', path: '/courses' },
     { icon: ClipboardList, label: 'Assignments', path: '/assignments' },
     { icon: User, label: 'Profile', path: '/profile' },
+    { icon: Award, label: 'Certificates', path: '/certificates', roles: ['student'] },
   ];
 
   return (

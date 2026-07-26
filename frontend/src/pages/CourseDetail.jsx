@@ -119,6 +119,10 @@ export default function CourseDetail() {
                 {isEnrolled ? 'Enrolled ✓' : enrolling ? 'Enrolling...' : 'Enroll Now'}
               </button>
             )}
+              {user?.role === 'student' && isEnrolled && (
+  <ClaimCertificateButton courseId={id} />
+)}
+            
           </div>
 
           {/* Right: Module Constellation Preview */}
@@ -260,6 +264,35 @@ function Badge({ children }) {
     <span className="text-xs font-medium bg-white/10 text-white px-3 py-1.5 rounded-full capitalize">
       {children}
     </span>
+  );
+}
+
+function ClaimCertificateButton({ courseId }) {
+  const [status, setStatus] = useState('idle');
+  const [message, setMessage] = useState('');
+
+  const handleClaim = async () => {
+    setStatus('loading');
+    try {
+      const { data } = await api.post(`/certificates/claim/${courseId}`);
+      window.location.href = `/certificates/${data.verificationCode}`;
+    } catch (error) {
+      setMessage(error.response?.data?.message || 'Not eligible yet');
+      setStatus('error');
+    }
+  };
+
+  return (
+    <div className="mt-3">
+      <button
+        onClick={handleClaim}
+        disabled={status === 'loading'}
+        className="text-accent text-sm font-medium hover:underline"
+      >
+        {status === 'loading' ? 'Checking...' : '🏆 Claim Certificate'}
+      </button>
+      {status === 'error' && <p className="text-text-secondary text-xs mt-1">{message}</p>}
+    </div>
   );
 }
 

@@ -10,6 +10,7 @@ const assignmentRoutes = require('./routes/assignmentRoutes');
 const submissionRoutes = require('./routes/submissionRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const certificateRoutes = require('./routes/certificateRoutes');
 
 
 const app = express();
@@ -27,6 +28,7 @@ app.use('/api/assignments', assignmentRoutes);
 app.use('/api/submissions', submissionRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/certificates', certificateRoutes);
 const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {

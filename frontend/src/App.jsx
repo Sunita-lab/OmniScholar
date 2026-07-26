@@ -14,6 +14,8 @@ import CreateCourse from './pages/CreateCourse';
 import CreateAssignment from './pages/CreateAssignment';
 import Profile from './pages/Profile';
 import Landing from './pages/Landing';
+import Certificates from './pages/Certificates';
+import CertificateView from './pages/CertificateView';
 
 function DashboardRouter() {
   const { user } = useAuth();
@@ -99,6 +101,8 @@ function App() {
             }
           />
           <Route path="/profile" element={<ProtectedRoute><DashboardLayout><Profile /></DashboardLayout></ProtectedRoute>} />
+          <Route path="/certificates" element={<ProtectedRoute allowedRoles={['student']}><DashboardLayout><Certificates /></DashboardLayout></ProtectedRoute>} />
+          <Route path="/certificates/:code" element={<ProtectedRoute><DashboardLayout><CertificateView /></DashboardLayout></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
