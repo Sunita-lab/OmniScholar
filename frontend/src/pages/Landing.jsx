@@ -201,9 +201,22 @@ export default function Landing() {
         Start Teaching
       </button>
     </div>
-    <div className="bg-secondary rounded-[20px] p-8 h-72 flex items-center justify-center">
-      <p className="text-slate-400 text-sm">Dashboard preview</p>
-    </div>
+    <div className="bg-secondary rounded-[20px] p-5 sm:p-6 border border-white/10 shadow-xl">
+  {/* Mini stat cards */}
+  <div className="grid grid-cols-3 gap-3 mb-4">
+    <MiniStat label="Courses" value="4" />
+    <MiniStat label="Students" value="128" />
+    <MiniStat label="Pending" value="6" accent />
+  </div>
+
+  {/* Mini submissions list */}
+  <div className="bg-white/5 rounded-[12px] p-4 space-y-3">
+    <p className="text-slate-400 text-xs font-medium mb-1">Submissions Queue</p>
+    <MiniRow name="Aditi Sharma" title="BST Implementation" status="submitted" />
+    <MiniRow name="Rohan Mehta" title="Sorting Algorithms" status="late" />
+    <MiniRow name="Priya Nair" title="Graph Traversal" status="submitted" />
+  </div>
+</div>
   </div>
 </section>
 
@@ -234,6 +247,36 @@ export default function Landing() {
     </div>
   </div>
 </footer>
+    </div>
+  );
+}
+
+function MiniStat({ label, value, accent = false }) {
+  return (
+    <div className="bg-white/5 rounded-[10px] p-3 text-center">
+      <p className={`text-lg font-bold font-mono ${accent ? 'text-accent' : 'text-white'}`}>{value}</p>
+      <p className="text-slate-400 text-[10px]">{label}</p>
+    </div>
+  );
+}
+
+function MiniRow({ name, title, status }) {
+  return (
+    <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2 min-w-0">
+        <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-[10px] font-semibold shrink-0">
+          {name.charAt(0)}
+        </div>
+        <div className="min-w-0">
+          <p className="text-white text-xs font-medium truncate">{title}</p>
+          <p className="text-slate-400 text-[10px] truncate">{name}</p>
+        </div>
+      </div>
+      <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0 ${
+        status === 'late' ? 'bg-warning/20 text-warning' : 'bg-primary/20 text-primary'
+      }`}>
+        {status}
+      </span>
     </div>
   );
 }
