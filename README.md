@@ -2,7 +2,7 @@
 
 **The universe of knowledge, mapped for you.**
 
-OmniScholar is a full-stack Learning Management System (LMS) built with the MERN stack, designed for teachers to manage courses and assignments, and for students to learn, submit work, and track their progress — all through a clean, purpose-built interface.
+OmniScholar is a full-stack Learning Management System (LMS) built with the MERN stack, designed for teachers to manage courses and assignments, and for students to learn, submit work, track their progress, and earn certificates — all through a clean, purpose-built interface.
 
 🔗 **Live Demo:** [omnischolar.vercel.app](https://omnischolar.vercel.app)
 🔗 **API:** [omnischolar.onrender.com](https://omnischolar.onrender.com)
@@ -30,6 +30,11 @@ OmniScholar is a full-stack Learning Management System (LMS) built with the MERN
 - Role-specific dashboards with real-time stats
 - Teachers: course overview, student counts, submission queue
 - Students: enrolled courses, pending assignments, recent grades
+
+### Certificates
+- Automatically issued once a student completes and is graded on every assignment in a course
+- Unique verification code per certificate
+- Public verification page — no login required to confirm authenticity
 
 ### File Management
 - Secure file uploads and downloads using MongoDB GridFS
@@ -143,17 +148,6 @@ OmniScholar's visual identity is built around the concept of a **"universe of kn
 
 ---
 
-## 🗺️ Roadmap (v0.2+)
-
-- [ ] Cloudinary integration for optimized media storage
-- [ ] Quiz module
-- [ ] Certificate generation
-- [ ] Real-time notifications
-- [ ] Discussion forums
-- [ ] AI-powered learning recommendations
-
----
-
 ## 📄 License
 
 This project is currently a personal/portfolio project and is not licensed for commercial redistribution.
@@ -163,4 +157,3 @@ This project is currently a personal/portfolio project and is not licensed for c
 ## 👤 Author
 
 Built solo by Sunita Satpathy as a full-stack learning project — from backend architecture to frontend design, deployed end-to-end.
-
